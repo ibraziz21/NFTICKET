@@ -26,6 +26,7 @@ uint public totalSupply;
         backstageMax=10;
     }
 
+uint public totalmax = regularMax+vipMax+backstageMax;
     function toggleMint()  external onlyOwner {
         isMintEnabled = !isMintEnabled;
     }
@@ -46,5 +47,27 @@ uint public totalSupply;
 
 
 
+    }
+    function mintVip()  external payable {
+         require(isMintEnabled, "cannot mint");
+            require(minted[msg.sender]<1,"Already minted");
+            require(totalSupply<vipMax,"Sold out");
+
+
+            minted[msg.sender]++;
+            totalSupply++;
+            uint tokenID = totalSupply+100;
+            _safeMint(msg.sender,tokenID);
+    }
+     function mintBackstage()  external payable {
+         require(isMintEnabled, "cannot mint");
+            require(minted[msg.sender]<1,"Already minted");
+            require(totalSupply<backstageMax,"Sold out");
+
+
+            minted[msg.sender]++;
+            totalSupply++;
+            uint tokenID = totalSupply+200;
+            _safeMint(msg.sender,tokenID);
     }
 }

@@ -26,6 +26,13 @@ describe("Nfticket", function () {
         let instance  =await nftdeploy.deployed();
          await instance.toggleMint();
 
-        expect(instance.isMintEnabled()).equal(true);
+        expect(instance.isMintEnabled()==true);
+    })
+    it("Total Minted NFTs should never exceed total supply", async function() {
+        let instance = await nftdeploy.deployed();
+            await instance.toggleMint();
+        await instance.connect(user).mintVip();
+
+        expect(instance.totalSupply()<=instance.totalmax())
     })
 })
